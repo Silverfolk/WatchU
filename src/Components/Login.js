@@ -1,12 +1,18 @@
 import { useRef, useState } from "react"
 import Header from "./Header"
 import {ValidateState} from "../utils/Validate";
-import {createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import {createUserWithEmailAndPassword,signInWithEmailAndPassword, updateProfile  } from "firebase/auth";
 import {auth} from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isLogin,SetisLogin] =useState(true);
   const [ValidateMessage,SetValidateMessage] = useState(null);
+  
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
 
   const name=useRef(null);
   const email=useRef(null);
@@ -31,15 +37,33 @@ const Login = () => {
       createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
+        const user = userCredential.user;//once the user is being created we will update it's profile with it's name and photo url
+        updateProfile(user, {
+          displayName: name.current.value, photoURL: "https://assets.leetcode.com/users/avatars/avatar_1645288161.png"
+        }).then(() => {
+          // Profile updated!
+          console.log(auth.currentUser);
+          const {uid,email,displayName,accessToken,photoURL}=auth.currentUser;//we are fetching updated value from firebase to our redux store as agr 'user' use karenge toh wo updated wala nhi hoga  
+         
+          dispatch(addUser({uid:uid, email:email, displayName:displayName, accessToken:accessToken,photoURL:photoURL }));
+          
+          // ...then navigate
+          navigate('/browse');
+        }).catch((error) => {
+          SetValidateMessage(error.message);
+        });
         console.log(user);
+       
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        SetValidateMessage(errorMessage);
+        SetValidateMessage(errorCode+"-"+errorMessage);
+        navigate('/');
       });
+
+      
     }
     else{ //login
 
@@ -48,12 +72,14 @@ const Login = () => {
         // Signed in 
         const user = userCredential.user;
         console.log(user);
+        navigate('/browse');
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        SetValidateMessage(errorMessage);
+        SetValidateMessage(errorCode+"-"+errorMessage);
+        navigate('/');
       });
  
 

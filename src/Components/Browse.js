@@ -1,9 +1,10 @@
-
+import Header from "./Header"
 const Browse = () => {
   return (
-    <div>
-      <h2>browse</h2>
-    </div>
+    <>
+    <Header/>
+      
+    </>
   )
 }
 
