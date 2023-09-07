@@ -3,15 +3,15 @@ import Header from "./Header"
 import {ValidateState} from "../utils/Validate";
 import {createUserWithEmailAndPassword,signInWithEmailAndPassword, updateProfile  } from "firebase/auth";
 import {auth} from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+// import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-
+import { USER_photoURL } from "../utils/constants";
 const Login = () => {
   const [isLogin,SetisLogin] =useState(true);
   const [ValidateMessage,SetValidateMessage] = useState(null);
   
-  const navigate=useNavigate();
+  // const navigate=useNavigate();
   const dispatch=useDispatch();
 
   const name=useRef(null);
@@ -39,7 +39,7 @@ const Login = () => {
         // Signed in 
         const user = userCredential.user;//once the user is being created we will update it's profile with it's name and photo url
         updateProfile(user, {
-          displayName: name.current.value, photoURL: "https://assets.leetcode.com/users/avatars/avatar_1645288161.png"
+          displayName: name.current.value, photoURL: USER_photoURL
         }).then(() => {
           // Profile updated!
           console.log(auth.currentUser);
@@ -48,7 +48,7 @@ const Login = () => {
           dispatch(addUser({uid:uid, email:email, displayName:displayName, accessToken:accessToken,photoURL:photoURL }));
           
           // ...then navigate
-          navigate('/browse');
+          // navigate('/browse'); here we dont need to use this anymore as we have write user Authenticate logic in header and header is common in all compoenets of our app i.e agar user sign in hoga toh wo information authchange(firebase funtion) hume aise hi bata dega 
         }).catch((error) => {
           SetValidateMessage(error.message);
         });
@@ -60,7 +60,7 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         SetValidateMessage(errorCode+"-"+errorMessage);
-        navigate('/');
+        // navigate('/'); here we dont need to use this anymore as we have write user Authenticate logic in header and header is common in all compoenets of our app i.e agar user sign in hoga toh wo information authchange(firebase funtion) hume aise hi bata dega 
       });
 
       
@@ -72,14 +72,14 @@ const Login = () => {
         // Signed in 
         const user = userCredential.user;
         console.log(user);
-        navigate('/browse');
+        // navigate('/browse');here we dont need to use this anymore as we have write user Authenticate logic in header and header is common in all compoenets of our app i.e agar user sign in hoga toh wo information authchange(firebase funtion) hume aise hi bata dega 
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         SetValidateMessage(errorCode+"-"+errorMessage);
-        navigate('/');
+        // navigate('/');here we dont need to use this anymore as we have write user Authenticate logic in header and header is common in all compoenets of our app i.e agar user sign in hoga toh wo information authchange(firebase funtion) hume aise hi bata dega 
       });
  
 
