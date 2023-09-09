@@ -5,10 +5,14 @@ import {  onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useEffect } from "react";
 import { NETFLIX_LOGO } from "../utils/constants";
+import { ChangeGPTButtonState } from "../utils/GPTReducer";
+import { lang } from "../utils/constants";
+import { changeLanguage } from "../utils/appconfigSlice";
 const Header = () => {
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const user=useSelector((store)=>store.user)//getching the data from redux store 
+  const gptButton=useSelector(store=>store.GPT?.GPTSearchButton)
   const LogoutHandler=() => {
     signOut(auth)
       .then(() => {})
@@ -17,6 +21,12 @@ const Header = () => {
       });
    navigate('/');
   }
+  const HandleGPTClick= () => {
+    dispatch(ChangeGPTButtonState());
+  }
+ 
+
+
 
   useEffect(()=>{
     // isske logic ke according firebase "onAuthStateChanged" se dekhega ki user SignedIn hai ya logout hai agar signedin hoga toh wo direct login page pe nhi jaa payega
@@ -44,12 +54,23 @@ const Header = () => {
       }
     });
   },[]);
+
+  const handleLanguageChange= (event) =>{
+    dispatch(changeLanguage(event.target.value));
+  }
+
+ 
   return (
     <div className="flex justify-between absolute w-full px-8 py-2 bg-gradient-to-b from-black-400 z-20 bg-opacity-50">
      <img className="w-40"
       src={NETFLIX_LOGO} alt="logo" /> 
     
    {user && ( <div className="flex p-2 text-white font-sans text-sm">
+    { gptButton && (<select className="text-white bg-purple-700 py-2 px-4 mx-3 rounded-lg hover:opacity-75 " onChange={handleLanguageChange}> 
+     {/* Adding options using map */}
+      {lang.map(object=><option key={object.identifier} value={object.identifier}>{object.name}</option>)}
+    </select>)}
+    <button className="text-white bg-purple-700 py-2 px-4 mx-3 rounded-lg hover:opacity-75 " onClick={HandleGPTClick}>{gptButton?"Homepage":"GPT Search"}</button>
     <img className="w-11 h-11 " alt="img logo"  src={user.photoURL}/>
    <button onClick={LogoutHandler}>Sign Out</button>
     </div>)

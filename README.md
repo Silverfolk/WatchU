@@ -19,6 +19,9 @@
 -Updating Tailer after filtering it from moviesList 
 -Embedded the Youtube  video and make it to autoplay and mute 
 -Changing input data in our MovieBackground 
+-Adding Hooks for getting movies data
+-GPT SearchButton and Searchbar being added
+-MultiLanguage added
 
 # Features 
 -Login/Register
