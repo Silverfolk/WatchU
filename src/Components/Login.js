@@ -93,9 +93,9 @@ const Login = () => {
     <div className="relative"> {/* Use relative positioning on the parent container */}
     <Header />
     <div className="absolute "> {/* Use "inset-0" to cover the entire parent */}
-        <img src={IMG_BACKGROUND_URL} alt="background" className="w-full h-full object-cover" />
+        <img src={IMG_BACKGROUND_URL} alt="background" className="h-screen w-screen object-cover" />
     </div>
-    <form onSubmit={function(event){event.preventDefault();}} className="w-3/12 p-8 bg-black my-36 mx-auto absolute top-0 left-0 right-0 font-sans bg-opacity-80"> {/* Adjust form width and positioning */}
+    <form onSubmit={function(event){event.preventDefault();}} className="w-full md:w-3/12 p-8 bg-black my-36 mx-auto absolute top-0 left-0 right-0 font-sans bg-opacity-80"> {/* Adjust form width and positioning */}
     <h1 className="text-white py-3">{isLogin?"Sign In" :"Sign Up"}</h1>
         {!isLogin && <input ref={name} type="text" placeholder="Name" className="w-full p-4 m-4 bg-gray-800 text-white border border-gray-600 rounded-lg text-lg" />}
         <input ref={email} type="text" placeholder="Email Address" className="w-full p-4 m-4 bg-gray-800 text-white border border-gray-600 rounded-lg text-lg" />

@@ -16,7 +16,7 @@ const UpperContainer = () => {
     const title =mainmovie?.title;
     const movieId=mainmovie?.id;
   return (
-    <div>
+    <div className="pt-[30%] bg-black md:pt-0">
       
       <VideoTitle overview={overview} title={title}/>
       <VideoBackground movieId={movieId}/>

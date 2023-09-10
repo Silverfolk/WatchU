@@ -22,6 +22,8 @@
 -Adding Hooks for getting movies data
 -GPT SearchButton and Searchbar being added
 -MultiLanguage added
+-Added OpenAI API
+-Maked it Responsive 
 
 # Features 
 -Login/Register

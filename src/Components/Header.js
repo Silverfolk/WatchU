@@ -8,6 +8,7 @@ import { NETFLIX_LOGO } from "../utils/constants";
 import { ChangeGPTButtonState } from "../utils/GPTReducer";
 import { lang } from "../utils/constants";
 import { changeLanguage } from "../utils/appconfigSlice";
+
 const Header = () => {
   const dispatch=useDispatch();
   const navigate=useNavigate();
@@ -61,17 +62,17 @@ const Header = () => {
 
  
   return (
-    <div className="flex justify-between absolute w-full px-8 py-2 bg-gradient-to-b from-black-400 z-20 bg-opacity-50">
-     <img className="w-40"
+    <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
+     <img className="w-40  mx-auto md:mx-0"
       src={NETFLIX_LOGO} alt="logo" /> 
     
-   {user && ( <div className="flex p-2 text-white font-sans text-sm">
+   {user && ( <div className="flex p-2 justify-between text-white font-sans text-sm">
     { gptButton && (<select className="text-white bg-purple-700 py-2 px-4 mx-3 rounded-lg hover:opacity-75 " onChange={handleLanguageChange}> 
      {/* Adding options using map */}
       {lang.map(object=><option key={object.identifier} value={object.identifier}>{object.name}</option>)}
     </select>)}
     <button className="text-white bg-purple-700 py-2 px-4 mx-3 rounded-lg hover:opacity-75 " onClick={HandleGPTClick}>{gptButton?"Homepage":"GPT Search"}</button>
-    <img className="w-11 h-11 " alt="img logo"  src={user.photoURL}/>
+    <img className="hidden md:block w-12 h-12" alt="img logo"  src={user.photoURL}/>
    <button onClick={LogoutHandler}>Sign Out</button>
     </div>)
     }
