@@ -1,3 +1,5 @@
+Project is Hoisted at: https://watchu.web.app/
+
 #WatchU 
 -Create React App
 -Configured TailwindCSS
